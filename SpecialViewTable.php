@@ -38,8 +38,9 @@ class SpecialViewTable extends SpecialPage {
          }
       } else {
          $viewOutput->addWikiMsg( "viewtable-backtotablelist" );
+         $viewOutput->addWikiText( "==$par==\n" );
          $res = $dbr->select( $par, '*' );
-         $output = "\n\n{|class=\"wikitable\"\n|-\n";
+         $output = "{|class=\"wikitable\"\n|-\n";
          foreach ( $res as $row ) {
             $arr = viewTableObjectToArray( $row );
             foreach ( $arr as $key => $value ) {
