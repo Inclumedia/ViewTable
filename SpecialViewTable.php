@@ -30,36 +30,41 @@ class SpecialViewTable extends SpecialPage {
             $tables[] = $innerRow;
          }
       }
-      if ( !$par or !in_array( $par, $tables ) ) {
+      if ( $par !== 'all' && !in_array( $par, $tables ) ) {
          $res = $dbr->query( 'SHOW TABLES' );
          $viewOutput->addWikiMsg( "viewtable-selectatable" );
          foreach ( $tables as $table ) {
             $output .= "[[:Special:ViewTable/$table|$table]]<br/>";
          }
       } else {
+         if ( $par !== 'all' ) {
+            $tables = array( $par );
+         }
          $viewOutput->addWikiMsg( "viewtable-backtotablelist" );
-         $viewOutput->addWikiText( "==$par==\n" );
-         $res = $dbr->select( $par, '*' );
-         $output = "{|class=\"wikitable\"\n|-\n";
-         foreach ( $res as $row ) {
-            $arr = viewTableObjectToArray( $row );
-            foreach ( $arr as $key => $value ) {
-               $output .= "!$key\n";
+         foreach ( $tables as $table ) {
+            $output .= "==$table==\n";
+            $res = $dbr->select( $table, '*' );
+            $output .= "{|class=\"wikitable\"\n|-\n";
+            foreach ( $res as $row ) {
+               $arr = viewTableObjectToArray( $row );
+               foreach ( $arr as $key => $value ) {
+                  $output .= "!$key\n";
+               }
+               break;
             }
-            break;
-         }
-         $empty = true;
-         foreach ( $res as $row ) {
-            $output .= "|-\n";
-            foreach ( $row as $key => $value ) {
-               $output .= "|<nowiki>$value</nowiki>\n";
+            $empty = true;
+            foreach ( $res as $row ) {
+               $output .= "|-\n";
+               foreach ( $row as $key => $value ) {
+                  $output .= "|<nowiki>$value</nowiki>\n";
+               }
+               $empty = false;
             }
-            $empty = false;
+            $output .= "|}\n";
+            if ( $empty ) {
+                  $output .= "Table \"$table\" is empty.\n";
+            }
          }
-         $output .= "|}\n";
-      }
-      if ( $empty ) {
-            $output = "Table \"$par\" is empty.";
       }
       $viewOutput->addWikiText( $output );
       return $output;

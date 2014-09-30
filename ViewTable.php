@@ -41,6 +41,7 @@ $wgSpecialPages['ViewTable'] = 'SpecialViewTable';
 $wgSpecialPageGroups['ViewTable'] = 'other';
 $wgGroupPermissions['bureaucrat']['viewtable'] = true;
 $wgMessagesDirs['ViewTable'] = __DIR__ . '/i18n';
+ini_set('max_execution_time', 300);
 $wgExtensionMessagesFiles['ViewTableAlias'] = __DIR__ . '/ViewTable.alias.php';
 function viewTableObjectToArray( $d ) {
       if (is_object($d)) {
