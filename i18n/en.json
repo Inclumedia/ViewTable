@@ -1,0 +1,13 @@
+{
+    "@metadata": {
+        "authors": [
+            "Nathan Larson"
+        ]
+    },
+    "viewtable": "View table",
+    "viewtable-desc": "Implements [[Special:ViewTable|a special page]] that displays a database table",
+    "viewtable-notallowed": "Your account does not have permission to view tables.",
+    "viewtable-url": "Special:ViewTable",
+    "viewtable-backtotablelist": "[[Special:ViewTable|Back to table list]]",
+    "viewtable-selectatable" : "Select a table to view:\n"
+}
